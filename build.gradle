@@ -2,36 +2,52 @@ plugins {
     id 'java'
 }
 
-group = 'com.Index'
-version = '1.0'
-description = 'It consists of a reward system for staying in a specific place that you can define in the settings or in the game.'
+group = 'com.index.inafkrewards'
+version = '1.1.0'
+description = 'Sistema de recompensas para jugadores AFK en una región específica del servidor'
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17) 
+        languageVersion = JavaLanguageVersion.of(17)
     }
 }
 
 repositories {
     mavenCentral()
+    maven {
+        name = "papermc"
+        url = "https://repo.papermc.io/repository/maven-public/"
+    }
+    maven {
+        name = "placeholderapi"
+        url = "https://repo.placeholderapi.dev/repository/maven-public/"
+    }
 }
 
 dependencies {
-    compileOnly 'me.clip:placeholderapi:2.11.3'
+    compileOnly 'io.papermc.paper:paper-api:1.20.1-R0.1-SNAPSHOT'
+    compileOnly 'me.clip:placeholderapi:2.11.5'
 }
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+    options.release = 17
 }
 
 jar {
-    from {
-        configurations.compileClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest {
         attributes(
-            'Main-Class': 'com.Index.inafkrewards.Main' 
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version,
+            'Main-Class': 'com.index.inafkrewards.InAfkRewardsPlugin'
         )
+    }
+}
+
+tasks.register('copyJar', Copy) {
+    from jar.archiveFile
+    into './build/libs'
+    rename { String fileName ->
+        "${project.name}-${project.version}.jar"
     }
 }

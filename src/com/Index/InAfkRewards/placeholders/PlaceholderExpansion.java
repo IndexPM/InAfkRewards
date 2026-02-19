@@ -1,22 +1,36 @@
+package com.index.inafkrewards.placeholders;
+
+import com.index.inafkrewards.InAfkRewardsPlugin;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-public class PlaceholderExpansion extends PlaceholderExpansion {
+public class InAfkRewardsPlaceholder extends PlaceholderExpansion {
+
+    private final InAfkRewardsPlugin plugin;
+
+    public InAfkRewardsPlaceholder(InAfkRewardsPlugin plugin) {
+        this.plugin = plugin;
+    }
 
     @Override
     public @NotNull String getIdentifier() {
-        return "inafkrewards"; 
+        return "inafkrewards";
     }
 
     @Override
     public @NotNull String getAuthor() {
-        return "Index"; 
+        return plugin.getDescription().getAuthors().isEmpty() ? "IndexDev" : plugin.getDescription().getAuthors().get(0);
     }
 
     @Override
     public @NotNull String getVersion() {
-        return "0.2";
+        return plugin.getDescription().getVersion();
+    }
+
+    @Override
+    public boolean persist() {
+        return true;
     }
 
     @Override
@@ -24,15 +38,29 @@ public class PlaceholderExpansion extends PlaceholderExpansion {
         if (player == null) {
             return "";
         }
- 
-        if (params.equalsIgnoreCase("time")) {
-            return String.valueOf(Main.getInstance().getAfkTime(player)); 
+
+        // %inafkrewards_inline%
+        if (params.equalsIgnoreCase("inafk")) {
+            if (plugin.getAfkRegionManager().isPlayerInAfkRegion(player.getLocation())) {
+                return "§a✓ En región AFK";
+            } else {
+                return "§c✗ Fuera de región AFK";
+            }
         }
 
-        if (params.equalsIgnoreCase("reward")) {
-            return Main.getInstance().getNextReward(player); 
+        // %inafkrewards_radius%
+        if (params.equalsIgnoreCase("radius")) {
+            return String.valueOf(plugin.getAfkRegionManager().getRadius());
         }
 
-        return null; 
+        // %inafkrewards_location%
+        if (params.equalsIgnoreCase("location")) {
+            return "§6" + plugin.getAfkRegionManager().getAfkLocation().getBlockX() + ", " +
+                    plugin.getAfkRegionManager().getAfkLocation().getBlockY() + ", " +
+                    plugin.getAfkRegionManager().getAfkLocation().getBlockZ() + " §8(" +
+                    plugin.getAfkRegionManager().getAfkLocation().getWorld().getName() + ")";
+        }
+
+        return null;
     }
 }

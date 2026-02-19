@@ -1,12 +1,18 @@
-name: InAfkReward
-main: com.index.InAfkReward.AfkRewards
-version: 0.0.2
-api-version: 1.21
+name: InAfkRewards
+main: com.index.inafkrewards.InAfkRewardsPlugin
+version: 1.1.0
+api-version: 1.13
 author: IndexDev
-description: InAfkRewards otorga recompensas a los jugadores por permanecer AFK en una región específica.
+description: Sistema de recompensas para jugadores AFK en una región específica del servidor.
 depend: []
 softdepend: [PlaceholderAPI]
+
 commands:
   afkrewards:
-    description: Muestra información sobre el plugin AfkRewards.
+    description: Muestra información sobre el plugin InAfkRewards
     usage: /afkrewards
+    aliases: [afk]
+  afkrewardsreload:
+    description: Recarga la configuración del plugin
+    usage: /afkrewardsreload
+    permission: inafkrewards.reload

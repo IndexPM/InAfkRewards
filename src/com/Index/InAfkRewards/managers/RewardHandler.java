@@ -18,7 +18,7 @@ public class RewardHandler {
 
     public RewardHandler(JavaPlugin plugin) {
         this.plugin = plugin;
-        this.rewardInterval = plugin.getConfig().getLong("reward.interval", 300) * 20L; // Convertir a ticks
+        this.rewardInterval = plugin.getConfig().getLong("reward.interval", 300) * 20L; 
         this.rewardCommand = plugin.getConfig().getString("reward.command", "give %player_name% diamond 1");
         
         plugin.getLogger().info("RewardHandler configurado - Intervalo: " + (rewardInterval / 20) + "s");

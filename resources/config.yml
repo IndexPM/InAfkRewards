@@ -1,10 +1,33 @@
-afk-region: 
+# InAfkRewards - Configuración del plugin
+# Autor: IndexDev
+# Versión: 1.1.0
+
+# Configuración de la región AFK
+# Los jugadores dentro de esta región recibirán recompensas periódicamente
+afk-region:
+  # Coordenadas del centro de la región
   x: 0.0
   y: 0.0
   z: 0.0
+  
+  # Nombre del mundo donde está la región
   world: lobby
-  redius: 5.0
+  
+  # Radio de la región (en bloques)
+  radius: 5.0
 
+# Configuración de las recompensas
 reward:
-  interval: 300 # Intervalo de tiempo para otorgar las recompensas en segundos.
+  # Intervalo entre recompensas (en segundos)
+  interval: 300
+  
+  # Comando a ejecutar cuando un jugador recibe una recompensa
+  # Usa %player_name% para reemplazar el nombre del jugador
   command: "key give %player_name% Koth 3"
+
+# Configuración de mensajes
+messages:
+  prefix: "&a[&6InAfkRewards&a]"
+  reward: "&a¡Has recibido una recompensa!"
+  afk-enabled: "&aRecompensas por AFK activadas"
+  afk-disabled: "&cRecompensas por AFK desactivadas"
